@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Categorie;
+use App\Entity\Proprietaires;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +14,8 @@ class MenuController extends AbstractController
     public function _menu(ManagerRegistry $doctrine): Response
     {
         return $this->render('menu/_menu.html.twig', [
-            'categories'=>$doctrine->getRepository(Categorie::class)->findAll()
+            'categories'=>$doctrine->getRepository(Categorie::class)->findAll(),
+            'proprietaires'=>$doctrine->getRepository(Proprietaires::class)->findAll()
         ]);
     }
 }

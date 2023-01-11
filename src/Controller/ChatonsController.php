@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Categorie;
 use App\Entity\Chaton;
+use App\Entity\Proprietaires;
 use App\Form\ChatonType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,22 +17,30 @@ class ChatonsController extends AbstractController
     /**
      * @Route("/chatons/{idCategorie}", name="app_chatons_voir")
      */
-    public function index($idCategorie, ManagerRegistry $doctrine): Response
+    public function index($idCategorie,  ManagerRegistry $doctrine): Response
     {
         $categorie = $doctrine->getRepository(Categorie::class)->find($idCategorie);
+        $proprietaires =$doctrine->getRepository(Proprietaires::class);
+
+
         //si on n'a rien trouvé -> 404
         if (!$categorie) {
             throw $this->createNotFoundException("Aucune catégorie avec l'id $idCategorie");
         }
 
+
         return $this->render('chatons/index.html.twig', [
+
             'categorie' => $categorie,
-            "chatons" => $categorie->getChatons()
+            "chatons" => $categorie->getChatons(),
+
         ]);
     }
 
     /**
-     * @Route("/chaton/ajouter/", name="app_chaton_ajouter")
+     * @Route("/chaton
+
+*     /ajouter/", name="app_chaton_ajouter")
      */
     public function ajouterChaton(ManagerRegistry $doctrine, Request $request)
     {
@@ -48,6 +57,7 @@ class ChatonsController extends AbstractController
 
             //retour à l'accueil
             return $this->redirectToRoute("app_chatons_voir", ["idCategorie" => $chaton->getCategorie()->getId()]);
+
         }
 
         return $this->render("chatons/ajouter.html.twig", [

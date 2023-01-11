@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier une catégorie{% endblock %}
+
+{% block body %}
+    <h1>Modifier la catégorie <i>{{ proprietaires.nom and proprietaires.prenom}}</i></h1>
+    {{ form(formulaire) }
+{% endblock %}
